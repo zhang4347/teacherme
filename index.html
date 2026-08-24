@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>教師資訊｜張仲佑</title>
+
+<!--
+==========================================================
+  教師資訊　teacher-profile.html
+==========================================================
+  ✏️ 要改的內容都在 <body> 裡,每段前面有「✏️ 改這裡」註解。
+  📷 換照片:搜尋「換成你的照片」。
+  ⚠️ 年份目前是 20XX,記得填上真的。
+==========================================================
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --board:#2E4A3E;
+  --board-deep:#243B31;
+  --chalk:#F3F6F2;
+  --ink:#1E2A24;
+  --ink-soft:#5A6B62;
+  --red:#B23A2C;
+  --rule:#CDD9D0;
+  --paper:#FFFFFF;
+  --serif:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  --sans:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --mono:"JetBrains Mono","SFMono-Regular",Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+
+/* iframe 重點:不設 height:100%,讓內容自然撐長 */
+body{
+  margin:0;padding:28px 20px 48px;
+  font-family:var(--sans);color:var(--ink);line-height:1.8;
+  background-color:var(--chalk);
+  background-image:repeating-linear-gradient(to bottom,transparent 0 31px,var(--rule) 31px 32px);
+}
+.wrap{max-width:880px;margin:0 auto}
+
+/* ---------- 黑板 / 終端機 ---------- */
+.board{
+  position:relative;overflow:hidden;
+  background:var(--board);
+  background-image:
+    radial-gradient(ellipse at 28% 15%,rgba(255,255,255,.055),transparent 62%),
+    linear-gradient(rgba(255,255,255,.022) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.022) 1px,transparent 1px);
+  background-size:auto,26px 26px,26px 26px;
+  color:var(--chalk);border-radius:4px;
+  padding:38px 34px;display:flex;gap:32px;align-items:flex-start;
+  box-shadow:0 2px 0 var(--board-deep),0 12px 30px rgba(30,42,36,.2);
+}
+.portrait{
+  width:136px;flex:0 0 136px;aspect-ratio:3/4;
+  border-radius:3px;background:var(--chalk);object-fit:cover;
+  display:block;border:5px solid var(--chalk);
+}
+.board-text{flex:1;min-width:0}
+
+/* 終端機提示行(會打字) */
+.prompt{
+  font-family:var(--mono);font-size:.8rem;letter-spacing:.02em;
+  color:rgba(243,246,242,.55);margin:0 0 14px;min-height:1.4em;
+}
+.prompt .sig{color:rgba(243,246,242,.34);margin-right:.55em}
+.caret{
+  display:inline-block;width:.55em;height:1em;vertical-align:-.16em;
+  background:var(--red);margin-left:.15em;animation:blink 1.05s steps(1) infinite;
+}
+@keyframes blink{50%{opacity:0}}
+
+.name{
+  font-family:var(--serif);font-weight:700;
+  font-size:2.7rem;line-height:1.15;margin:0;
+  display:inline-block;position:relative;
+}
+.name::after{
+  content:"";position:absolute;left:-2px;right:-6px;bottom:-9px;height:4px;
+  background:repeating-linear-gradient(90deg,
+    rgba(243,246,242,.9) 0 7px,rgba(243,246,242,.45) 7px 11px,
+    rgba(243,246,242,.85) 11px 19px,rgba(243,246,242,.3) 19px 22px);
+  border-radius:3px;transform:rotate(-.5deg);
+  transform-origin:left center;animation:draw .55s .35s cubic-bezier(.3,.8,.4,1) backwards;
+}
+@keyframes draw{from{transform:rotate(-.5deg) scaleX(0)}}
+
+.role{margin:27px 0 0;font-size:1.04rem;color:rgba(243,246,242,.92)}
+.role span{color:rgba(243,246,242,.42);margin:0 .55em}
+.contact{
+  margin:13px 0 0;font-family:var(--mono);
+  font-size:.82rem;color:rgba(243,246,242,.6);
+}
+.contact a{color:inherit;text-decoration:underline;text-underline-offset:3px}
+
+/* ---------- 白紙區塊 ---------- */
+.sheet{
+  background:var(--paper);border:1px solid var(--rule);
+  border-radius:4px;padding:30px 34px;margin-top:22px;
+}
+.sheet h2{
+  font-family:var(--serif);font-weight:600;font-size:1.22rem;
+  margin:0 0 22px;padding-left:13px;border-left:4px solid var(--red);line-height:1.4;
+}
+.belief{margin:0;font-size:1.05rem;line-height:2.05}
+.belief strong{
+  font-weight:500;
+  background:linear-gradient(transparent 62%,rgba(178,58,44,.16) 62%);
+}
+
+/* 學歷:同校群組 */
+.school{margin:0 0 4px;font-size:.95rem;font-weight:500;color:var(--ink)}
+.degrees{list-style:none;margin:0;padding:0 0 0 15px;border-left:2px solid var(--rule)}
+.degrees li{padding:9px 0 9px 16px;position:relative}
+.degrees li::before{
+  content:"";position:absolute;left:-17px;top:1.35em;
+  width:14px;height:2px;background:var(--rule);
+}
+.degrees b{font-weight:500;display:block}
+.degrees time{font-family:var(--mono);font-size:.78rem;color:var(--ink-soft)}
+
+/* 經歷年表 */
+.entries{list-style:none;margin:0;padding:0}
+.entries li{
+  display:flex;gap:22px;padding:14px 0;border-top:1px solid var(--rule);
+  transition:padding-left .2s ease;
+}
+.entries li:first-child{border-top:0;padding-top:0}
+.entries li:hover{padding-left:6px}
+.entries time{
+  flex:0 0 118px;font-family:var(--mono);font-size:.78rem;
+  color:var(--ink-soft);padding-top:.5em;
+}
+.what{flex:1;min-width:0}
+.what b{font-weight:500;display:block}
+.what small{color:var(--ink-soft);font-size:.88rem}
+.now{
+  display:inline-block;font-family:var(--mono);font-size:.68rem;
+  color:var(--red);border:1px solid var(--red);border-radius:3px;
+  padding:0 6px;margin-left:8px;vertical-align:.14em;letter-spacing:.06em;
+}
+
+/* 專長標籤:逐一浮現 */
+.tags{display:flex;flex-wrap:wrap;gap:9px;margin:0;padding:0;list-style:none}
+.tags li{
+  font-family:var(--mono);font-size:.86rem;
+  border:1px solid var(--board);color:var(--board);
+  border-radius:999px;padding:5px 15px;
+  transition:background .18s ease,color .18s ease;
+}
+.tags li:hover{background:var(--board);color:var(--chalk)}
+.foot{margin:26px 0 0;text-align:center;font-family:var(--mono);font-size:.75rem;color:var(--ink-soft)}
+
+/* ---------- 手機 ---------- */
+@media (max-width:600px){
+  body{padding:16px 12px 32px}
+  .board{flex-direction:column;align-items:center;text-align:center;padding:28px 20px;gap:20px}
+  .name{font-size:2.15rem}
+  .sheet{padding:24px 20px}
+  .entries li{flex-direction:column;gap:2px}
+  .entries li:hover{padding-left:0}
+  .entries time{flex:none;padding-top:0}
+  .tags{justify-content:center}
+  .prompt{font-size:.72rem}
+}
+
+/* ---------- 列印 ---------- */
+@media print{
+  body{background:#fff;padding:0}
+  .board{box-shadow:none;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .sheet{break-inside:avoid;border-color:#bbb}
+  .caret,.foot{display:none}
+}
+
+/* ---------- 動畫(尊重系統設定) ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .board,.sheet{animation:rise .5s cubic-bezier(.2,.7,.3,1) backwards}
+  .sheet:nth-of-type(1){animation-delay:.07s}
+  .sheet:nth-of-type(2){animation-delay:.14s}
+  .sheet:nth-of-type(3){animation-delay:.21s}
+  .sheet:nth-of-type(4){animation-delay:.28s}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}}
+  .tags li{animation:pop .34s cubic-bezier(.2,.8,.3,1) backwards}
+  .tags li:nth-child(1){animation-delay:.42s}
+  .tags li:nth-child(2){animation-delay:.50s}
+  .tags li:nth-child(3){animation-delay:.58s}
+  .tags li:nth-child(4){animation-delay:.66s}
+  .tags li:nth-child(5){animation-delay:.74s}
+  .tags li:nth-child(6){animation-delay:.82s}
+  .tags li:nth-child(7){animation-delay:.90s}
+  @keyframes pop{from{opacity:0;transform:translateY(6px) scale(.96)}}
+}
+@media (prefers-reduced-motion:reduce){
+  .caret{animation:none}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ============ 黑板 / 終端機 ============ -->
+  <header class="board">
+
+    <!--
+      📷 換成你的照片:
+      照片命名成 photo.jpg(建議直式、寬 600px 以上),
+      跟這個 html 檔放在同一資料夾,再把下面整段 <svg>...</svg> 換成:
+      <img class="portrait" src="photo.jpg" alt="張仲佑教師照片">
+    -->
+    <svg class="portrait" viewBox="0 0 90 120" role="img" aria-label="教師照片位置">
+      <rect width="90" height="120" fill="#E4EAE5"/>
+      <circle cx="45" cy="46" r="19" fill="#B9C7BD"/>
+      <path d="M12 120c0-19 15-32 33-32s33 13 33 32z" fill="#B9C7BD"/>
+    </svg>
+
+    <div class="board-text">
+      <!-- ✏️ 改這裡:學校全名(打字動畫的內容取自這行文字) -->
+      <p class="prompt" data-type><span class="sig">$</span>新北市立鶯歌高級工商職業學校　資訊科</p>
+
+      <h1 class="name">張仲佑</h1>
+
+      <p class="role">資訊科教師 <span>|</span> 程式設計．人工智慧應用</p>
+
+      <!-- ✏️ 改這裡:聯絡方式,不想公開整行刪掉 -->
+      <p class="contact">校內分機 000　·　your.mail@school.edu.tw</p>
+    </div>
+  </header>
+
+  <!-- ============ 教育理念 ============ -->
+  <section class="sheet">
+    <h2>教育理念</h2>
+    <!-- ✏️ 改這裡:換成你自己的話。想強調的句子用 <strong> 包起來會有螢光筆效果 -->
+    <p class="belief">
+      資訊科的學生最常問的一句話是「這個以後用得到嗎」,所以我盡量讓每個單元都做得出東西——
+      哪怕只是一個會跑的小程式,能自己按下執行、看到結果,學習就成立了。
+      AI 工具進教室之後這件事更重要:<strong>會用工具不難,難的是知道它為什麼給你這個答案、以及什麼時候不該相信它。</strong>
+      我希望學生離開教室時,手上有作品,腦袋裡有判斷力。
+    </p>
+  </section>
+
+  <!-- ============ 學歷 ============ -->
+  <section class="sheet">
+    <h2>學歷</h2>
+    <!-- ✏️ 改這裡:年份請填上真的 -->
+    <p class="school">國立臺北科技大學</p>
+    <ul class="degrees">
+      <li>
+        <b>技術及職業教育研究所　碩士</b>
+        <time>20XX – 20XX</time>
+      </li>
+      <li>
+        <b>電子工程系　學士</b>
+        <time>20XX – 20XX</time>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============ 教學經歷 ============ -->
+  <section class="sheet">
+    <h2>教學經歷</h2>
+    <!-- ✏️ 改這裡:年份請填上真的;要加一筆就整段複製 <li>...</li> -->
+    <ul class="entries">
+      <li>
+        <time>20XX – 迄今</time>
+        <div class="what">
+          <b>新北市立鶯歌高級工商職業學校　代理教師<span class="now">現職</span></b>
+          <small>資訊科　程式設計、專題製作</small>
+        </div>
+      </li>
+      <li>
+        <time>20XX – 20XX</time>
+        <div class="what">
+          <b>新北市立新埔國民中學　代理教師</b>
+          <small>資訊科技</small>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ============ 專長領域 ============ -->
+  <section class="sheet">
+    <h2>專長領域</h2>
+    <!-- ✏️ 改這裡:一個 <li> 一個標籤 -->
+    <ul class="tags">
+      <li>程式設計教學</li>
+      <li>Python</li>
+      <li>人工智慧應用</li>
+      <li>大型語言模型 LLM</li>
+      <li>資訊科技課程設計</li>
+      <li>專題製作指導</li>
+    </ul>
+  </section>
+
+  <p class="foot">最後更新 2026.08</p>
+
+</div>
+
+<script>
+// 打字動畫:文字本來就在 HTML 裡,JS 只是清空後重打。
+// 就算 JS 沒跑或被擋掉,內容一樣看得到。
+(function(){
+  var el = document.querySelector('[data-type]');
+  if(!el) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var sig = el.querySelector('.sig');
+  var text = el.textContent.replace(/^\$\s*/,'').trim();
+  el.textContent = '';
+  if(sig) el.appendChild(sig);
+  var span = document.createElement('span');
+  var caret = document.createElement('i');
+  caret.className = 'caret';
+  el.appendChild(span); el.appendChild(caret);
+  var i = 0;
+  (function tick(){
+    if(i >= text.length){ return; }
+    span.textContent += text.charAt(i++);
+    setTimeout(tick, 45 + Math.random() * 45);
+  })();
+})();
+</script>
+</body>
+</html>
